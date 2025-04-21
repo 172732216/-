@@ -27,29 +27,37 @@
             </el-table> 
         </el-card>
         </el-col>
-       
+        <el-col :span="16" style="margin-top: 20px;">
+            <div class="num">
+                <el-card
+                :body-style="{display:'flex',padding:0}"
+                v-for="item in countData"
+                :key="item.name"
+                >
+                    <component :is="item.icon" class="icons" :style="{background:item.color}"></component>
+                    <div class="detail">
+                        <p class="num">￥{{ item.value }}</p>
+                        <p class="txt">￥{{ item.name }}</p>
+                    </div>
+                </el-card>
+            </div>
+        </el-col>
     </el-row>
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref,getCurrentInstance,onMounted } from 'vue'
 import axios from 'axios'
+const {proxy}=getCurrentInstance();
+
 const getImageUrl=(user)=>{
     return new URL(`../assets/images/${user}.png`,import.meta.url).href
 }
 const tableData = ref([
-    {
-      name: "Java",
-      todayBuy: 100,
-      monthBuy: 200,
-      totalBuy: 300,
-    },
-    {
-      name: "Python",
-      todayBuy: 100,
-      monthBuy: 200,
-      totalBuy: 300,
-    }
+   
+])
+const countData = ref([
+   
 ])
 const tableLabel = ref({
     name: "课程",
@@ -57,17 +65,21 @@ const tableLabel = ref({
     monthBuy: "本月购买",
     totalBuy: "总购买",
 })
-axios({
-    url:'/api/home/getTableData',
-    method:'get'
-}).then(res=>{
-    if(res.data.code===200){
-        console.log(res.data.data.tableData)
-        tableData.value=res.data.data.tableData
-    }
-    
+const getTableData=async ()=>{
+    const data=await proxy.$api.getTableData()
+    tableData.value=data
+}
+const getCountData=async ()=>{
+    const data=await proxy.$api.getCountData()
+    countData.value=data
+}
+onMounted(()=>{
+    getTableData()
+    getCountData()
 })
 </script>
+
+
 
 <style scoped lang="less">
 .home{
@@ -107,8 +119,40 @@ axios({
             }
         }
     }
-    .user-info{
+    .user-table{
         margin-top: 20px;
+    }
+    .num{
+        display:flex;
+        flex-wrap:wrap;
+        justify-content: space-between;
+        .el-card{
+            width: 32%;
+            margin-bottom: 20px;
+        }
+        .icons{
+            width: 80px;
+            height: 80px;
+            font-size: 30px;
+            text-align: center;
+            line-height: 80px;
+            color: #fff;
+        }
+        .detail{
+            margin-left: 15px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            .num{
+                font-size: 30px;
+                margin-bottom: 10px;
+            }
+            .txt{
+                font-size: 15px;
+                text-align: center;
+                color: #999;
+            }
+        }
     }
 }
 </style>

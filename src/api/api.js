@@ -18,10 +18,32 @@ export default{
             method:"get",
         })
     },
-    getUserData(){
+    getUserData(data){
         return request({
             url:"/home/getUserData",
             method:"get",
+            data,
+        })
+    },
+    deleteUser(data){
+        return request({
+            url:"/home/deleteUser",
+            method:"get",
+            data,
+        })
+    },
+    addUser(data){
+        return request({
+            url:"/home/addUser",
+            method:"post",
+            data,
+        })
+    },
+    editUser(data){
+        return request({
+            url:"/home/editUser",
+            method:"post",
+            data,
         })
     }
 }

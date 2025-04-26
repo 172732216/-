@@ -41,7 +41,7 @@
                     </div>
                 </el-card>
             </div>
-            <el-card class="top-echart" style="height: 270px;">
+            <el-card class="top-echart" style="height: 245px;">
                 <div ref="echart" style="height: 270px;"></div>
             </el-card>
             <div class="graph">

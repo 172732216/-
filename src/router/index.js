@@ -10,29 +10,18 @@ const routes = [
       name: 'main',
       component:Main,
       redirect:'/home',
-      children:[
-        {
-            path: 'home',
-            name: 'home',
-            component:Home,
-        },
-        {
-          path: 'user',
-          name: 'user',
-          component:User,
-        },
-        {
-          path: 'mall',
-          name: 'mall',
-          component:Mall,
-        }
-      ]
+      children:[]
     },
     {
       path:"/login",
       name:"login",
       component:Login
-    }
+    },
+    {
+      path:"/404",
+      name:"404",
+      component:() => import('../views/404.vue')
+    },
   ]
 
 const router = createRouter({

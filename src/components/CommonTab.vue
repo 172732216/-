@@ -17,7 +17,7 @@ import { computed, ref } from 'vue';
 import { useRoute,useRouter } from 'vue-router';
 import { useAllDataStore } from '../stores';
 const store=useAllDataStore()
-const tags=computed(()=>store.tags)
+const tags=computed(()=>store.state.tags)
 const route=useRoute()
 const router=useRouter()
 const handleMenu=(tag)=>{
